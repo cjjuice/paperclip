@@ -23,6 +23,7 @@ module Paperclip
     #   +string_geometry_parser+ - an object with a method named +parse+ that takes a string and produces an object with +width+, +height+, and +to_s+ accessors. Defaults to Paperclip::Geometry
     #   +source_file_options+ - flags passed to the +convert+ command that influence how the source file is read
     #   +convert_options+ - flags passed to the +convert+ command that influence how the image is processed
+    #   +pre_convert_options+ - flags passed to the +convert+ command before transform
     #   +whiny+ - whether to raise an error when processing fails. Defaults to true
     #   +format+ - the desired filename extension
     #   +animated+ - whether to merge all the layers in the image. Defaults to true
@@ -35,6 +36,7 @@ module Paperclip
       @current_geometry    = options.fetch(:file_geometry_parser, Geometry).from_file(@file)
       @source_file_options = options[:source_file_options]
       @convert_options     = options[:convert_options]
+      @pre_convert_options = options[:pre_convert_options]
       @whiny               = options.fetch(:whiny, true)
       @format              = options[:format]
       @animated            = options.fetch(:animated, true)
@@ -45,6 +47,7 @@ module Paperclip
 
       @source_file_options = @source_file_options.split(/\s+/) if @source_file_options.respond_to?(:split)
       @convert_options     = @convert_options.split(/\s+/)     if @convert_options.respond_to?(:split)
+      @pre_convert_options = @pre_convert_options.split(/\s+/)     if @pre_convert_options.respond_to?(:split)
 
       @current_format      = File.extname(@file.path)
       @basename            = File.basename(@file.path, @current_format)
