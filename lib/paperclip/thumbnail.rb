@@ -60,7 +60,7 @@ module Paperclip
 
     # Returns true if the image is meant to make use of additional convert options.
     def convert_options?
-      !@convert_options.nil? && !@convert_options.empty?
+      (!@convert_options.nil? && !@convert_options.empty?) || (!@pre_convert_options.nil? && !@pre_convert_options.empty?)
     end
 
     # Performs the conversion of the +file+ into a thumbnail. Returns the Tempfile
